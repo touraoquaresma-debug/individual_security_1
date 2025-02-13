@@ -1,0 +1,43 @@
+[project]
+name = "projeto-mid"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "opencv-python>=4.11.0.86",
+    "pandas>=2.2.3",
+    "rich>=13.9.4",
+    "ultralytics>=8.3.74",
+]
+
+[dependency-groups]
+dev = [
+    "pyinstaller>=6.12.0",
+    "ruff>=0.9.6",
+    "taskipy>=1.14.1",
+]
+
+[tool.ruff]
+line-length = 79
+extend-exclude = ['migrations']
+
+[tool.ruff.lint]
+preview = true
+select = ['I', 'F', 'E', 'W', 'PL', 'PT']
+
+[tool.ruff.format]
+preview = true
+quote-style = 'single'
+
+[tool.taskipy.tasks]
+lint = 'ruff check . && ruff check . --diff'
+format = 'ruff check . --fix && ruff format .'
+jupyter = 'uv run --with jupyter jupyter lab'
+run_main = "python main.py"
+run_main_video = "python main.py --video_path video_idoso.mp4"
+run_main_camera = "python main.py --video_path 0"
+run_main_custom = "python main.py --video_path {path} --duration {duration} --weights {weights}"
+clean = "rm -rf __pycache__ .pytest_cache .ruff_cache"
+test = "python -m pytest"
+train = "python treinamento.py"
