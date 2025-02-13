@@ -1,0 +1,2 @@
+# YOLO-Elderly-Pose-Detection-Monitoring
+ Optimized Python project for elderly monitoring using YOLO-based pose detection. Accurately identifies 'standing', 'sitting', 'lying down', and 'undetected' poses from video, leveraging YOLO family networks and OpenCV for efficient real-time analysis. Developed for UFPA-FCT Computational Intelligence course. Ideal for research and applications in elder care, assisted living, and activity recognition.
