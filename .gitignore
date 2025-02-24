@@ -18,6 +18,7 @@ downloads/Videos/
 downloads/test/
 downloads/valid/
 downloads/*.zip
+output/
 eggs/
 .eggs/
 lib/

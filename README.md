@@ -61,24 +61,9 @@ O projeto utiliza `taskipy` para automatizar comandos comuns. Aqui estão os com
 # Executar o monitoramento (modo interativo)
 task run
 
-# Executar com vídeo específico
-task run_main_video
-
-# Executar com webcam
-task run_main_camera
-
-# Executar com parâmetros personalizados
-task run_main_custom path=caminho/video.mp4 duration=5 weights=path/weights.pt
-
 # Formatar e verificar código
 task format
 task lint
-
-# Limpar arquivos cache
-task clean
-
-# Executar testes
-task test
 
 # Iniciar treinamento
 task train

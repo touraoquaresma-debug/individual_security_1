@@ -1,0 +1,117 @@
+{
+ "version": "auto-py-to-exe-configuration_v1",
+ "pyinstallerOptions": [
+  {
+   "optionDest": "noconfirm",
+   "value": true
+  },
+  {
+   "optionDest": "filenames",
+   "value": "C:/Users/joaod/Documents/GitHub/YOLO-Elderly-Pose-Detection-Monitoring/main.py"
+  },
+  {
+   "optionDest": "onefile",
+   "value": true
+  },
+  {
+   "optionDest": "console",
+   "value": true
+  },
+  {
+   "optionDest": "icon_file",
+   "value": "C:/Users/joaod/Documents/GitHub/YOLO-Elderly-Pose-Detection-Monitoring/downloads/imagens/idoso.ico"
+  },
+  {
+   "optionDest": "clean_build",
+   "value": true
+  },
+  {
+   "optionDest": "splash",
+   "value": "C:/Users/joaod/Documents/GitHub/YOLO-Elderly-Pose-Detection-Monitoring/downloads/imagens/idoso.png"
+  },
+  {
+   "optionDest": "debug",
+   "value": "all"
+  },
+  {
+   "optionDest": "optimize",
+   "value": "1"
+  },
+  {
+   "optionDest": "strip",
+   "value": false
+  },
+  {
+   "optionDest": "noupx",
+   "value": true
+  },
+  {
+   "optionDest": "disable_windowed_traceback",
+   "value": false
+  },
+  {
+   "optionDest": "uac_admin",
+   "value": true
+  },
+  {
+   "optionDest": "uac_uiaccess",
+   "value": false
+  },
+  {
+   "optionDest": "argv_emulation",
+   "value": false
+  },
+  {
+   "optionDest": "bootloader_ignore_signals",
+   "value": false
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/Users/joaod/Documents/GitHub/YOLO-Elderly-Pose-Detection-Monitoring/runs/pose/train/weights/best.pt;runs/pose/train/weights"
+  },
+  {
+   "optionDest": "excludes",
+   "value": "ruff"
+  },
+  {
+   "optionDest": "excludes",
+   "value": "taskipy"
+  },
+  {
+   "optionDest": "hiddenimports",
+   "value": "numpy"
+  },
+  {
+   "optionDest": "hiddenimports",
+   "value": "torch"
+  },
+  {
+   "optionDest": "hiddenimports",
+   "value": "yaml"
+  },
+  {
+   "optionDest": "hiddenimports",
+   "value": "cv2"
+  },
+  {
+   "optionDest": "hiddenimports",
+   "value": "lap"
+  },
+  {
+   "optionDest": "hiddenimports",
+   "value": "tensorboard"
+  },
+  {
+   "optionDest": "hiddenimports",
+   "value": "torch.utils.tensorboard"
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/Users/joaod/Documents/GitHub/YOLO-Elderly-Pose-Detection-Monitoring/downloads/YOLOElderlyPose.v2i.yolov11/data.yaml;downloads/YOLOElderlyPose.v2i.yolov11"
+  }
+ ],
+ "nonPyinstallerOptions": {
+  "increaseRecursionLimit": true,
+  "manualArguments": ""
+ }
+}

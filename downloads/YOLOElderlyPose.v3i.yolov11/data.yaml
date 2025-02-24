@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 4
+names: ['idoso deitado', 'idoso em pe', 'idoso sentado', 'jovem']
+
+roboflow:
+  workspace: projetos-yolo
+  project: yoloelderlypose
+  version: 3
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/projetos-yolo/yoloelderlypose/dataset/3

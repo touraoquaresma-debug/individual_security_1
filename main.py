@@ -1,4 +1,5 @@
 import msvcrt  # Biblioteca para verificar se uma tecla foi pressionada
+import sys
 import time
 
 import cv2
@@ -16,6 +17,22 @@ from constants import (
     DURACAO_PADRAO,
     POSE_NAO_DETECTADA,
 )
+
+# Verifica se está executando como frozen app
+if getattr(sys, 'frozen', False):
+    try:
+        import pyi_splash  # type: ignore
+    except ModuleNotFoundError:
+        pass
+
+
+def initialize_app():
+    if 'pyi_splash' in sys.modules:
+        pyi_splash.update_text('Carregando módulos...')
+        time.sleep(1)
+        pyi_splash.update_text('Inicializando interface...')
+        time.sleep(1)
+
 
 console = Console()
 
@@ -136,7 +153,7 @@ def run_pose_monitoring(  # noqa: PLR0912, PLR0914, PLR0915
                 break
 
             frame_count += 1
-
+            console.print(f'\n🔢 Frame {frame_count}')
             results = model(frame, verbose=False)[
                 0
             ]  # Obtém o primeiro resultado
@@ -229,6 +246,9 @@ def run_pose_monitoring(  # noqa: PLR0912, PLR0914, PLR0915
 
 if __name__ == '__main__':
     try:
+        initialize_app()
+        if 'pyi_splash' in sys.modules:
+            pyi_splash.close()
         while True:
             console.clear()
             console.print(
