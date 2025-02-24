@@ -11,7 +11,13 @@ __pycache__/
 build/
 develop-eggs/
 dist/
-downloads/
+downloads/imagens/idoso deitado/
+downloads/imagens/idoso em pe/
+downloads/imagens/idoso sentado/
+downloads/Videos/
+downloads/test/
+downloads/valid/
+downloads/*.zip
 eggs/
 .eggs/
 lib/
