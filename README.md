@@ -53,6 +53,16 @@ pip install -m requirements.txt
 uv sync --dev
 ```
 
+5. Ative o ambiente virtual:
+```bash
+# Windows
+.venv\Scripts\activate
+
+# Linux/macOS
+source .venv/Scripts/activate
+```
+
+
 #### Comandos Disponíveis
 
 O projeto utiliza `taskipy` para automatizar comandos comuns. Aqui estão os comandos disponíveis:
