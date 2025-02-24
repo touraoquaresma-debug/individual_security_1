@@ -1,3 +1,4 @@
+import msvcrt  # Biblioteca para verificar se uma tecla foi pressionada
 import time
 
 import cv2
@@ -13,7 +14,6 @@ from constants import (
     ARQUIVO_VIDEO_PADRAO,
     CLASSES_DETECTADAS,
     DURACAO_PADRAO,
-    FPS_PADRAO,
     POSE_NAO_DETECTADA,
 )
 
@@ -59,13 +59,19 @@ def get_user_parameters():
         )
     )
 
-    return video_path, duration_seconds, weights_path
+    # Seleção da visualização dos frames
+    annotated_frame_cv2 = Confirm.ask(
+        '\n🖼️ Visualizar frames com anotações?', default=True
+    )
+
+    return video_path, duration_seconds, weights_path, annotated_frame_cv2
 
 
-def run_pose_monitoring(  # noqa: PLR0914, PLR0915
+def run_pose_monitoring(  # noqa: PLR0912, PLR0914, PLR0915
     video_path=ARQUIVO_VIDEO_PADRAO,
     duration_seconds=DURACAO_PADRAO,
     weights_path=ARQUIVO_PESOS,
+    annotated_frame_cv2=True,
 ):
     # Inicialização do monitoramento
     console.print(
@@ -74,19 +80,19 @@ def run_pose_monitoring(  # noqa: PLR0914, PLR0915
 
     start_time = time.time()
     pose_durations = {
-        'em pé': 0,
-        'sentado': 0,
-        'deitado': 0,
+        'idoso deitado': 0,
+        'idoso em pe': 0,
+        'idoso sentado': 0,
+        'jovem': 0,
         POSE_NAO_DETECTADA: 0,
     }
     frame_count = 0
-    _detected_pose_last_frame = POSE_NAO_DETECTADA
 
     # Carregamento do modelo YOLO
     with console.status('[bold green]Carregando o modelo YOLO...'):
         try:
             model = YOLO(weights_path)
-            model.classes = [0, 1, 2]
+            model.classes = [0, 1, 2, 3]
         except Exception as e:
             console.print(
                 f'[bold red]❌ Erro ao carregar o modelo:[/] {str(e)}'
@@ -99,9 +105,6 @@ def run_pose_monitoring(  # noqa: PLR0914, PLR0915
         console.print('[bold red]❌ Erro ao abrir fonte de vídeo!')
         return
 
-    fps = cap.get(cv2.CAP_PROP_FPS) or FPS_PADRAO
-    target_frame_count = int(duration_seconds * fps)
-
     console.print('\n📊 Configurações:')
     console.print(f'- Duração planejada: {duration_seconds / 60:.1f} minutos')
     console.print(
@@ -110,24 +113,67 @@ def run_pose_monitoring(  # noqa: PLR0914, PLR0915
     )
 
     # Processamento dos frames
-    with Progress() as progress:
+    with Progress(console=console) as progress:
         task = progress.add_task(
-            '[cyan]Processando frames...', total=target_frame_count
+            '[cyan]Processando frames...[/cyan] [yellow]'
+            + '(Pressione q para terminar)[/yellow]',
+            total=duration_seconds,
         )
 
-        while cap.isOpened() and frame_count < target_frame_count:
+        while cap.isOpened():
+            current_time = time.time()
+            elapsed = current_time - start_time
+
+            # Atualiza a barra de progresso baseada no tempo real
+            progress.update(task, completed=min(elapsed, duration_seconds))
+
+            # Verifica se atingiu o tempo desejado
+            if elapsed >= duration_seconds:
+                break
+
             ret, frame = cap.read()
             if not ret:
                 break
 
             frame_count += 1
-            progress.update(task, advance=1)
 
-            results = model(frame)[0]  # Obtém o primeiro resultado
-
+            results = model(frame, verbose=False)[
+                0
+            ]  # Obtém o primeiro resultado
             person_detected = False
             best_confidence = 0
             best_pose = POSE_NAO_DETECTADA
+
+            if annotated_frame_cv2:
+                # Adiciona as anotações ao frame
+                annotated_frame = results.plot()
+
+                # Mostra o frame com as anotações na tela
+                cv2.imshow(
+                    'Sistema de Monitoramento de '
+                    + 'Poses - Deteccao em Tempo Real',
+                    annotated_frame,
+                )
+
+                # tecla a ser pressionada na janela
+                # do openvc para quebrar o loop
+                key = cv2.waitKey(1) & 0xFF
+                # Verifica se a tecla q foi pressionada na janela do OpenCV
+                if key == ord('q'):
+                    console.print(
+                        '\n❌ Monitoramento interrompido'
+                        + ' pela janela do OpenCV.'
+                    )
+                    break
+
+            # Verifica se há tecla pressionada no terminal
+            if msvcrt.kbhit():
+                terminal_key = msvcrt.getch().decode().lower()
+                if terminal_key == 'q':
+                    console.print(
+                        '\n❌ Monitoramento interrompido pelo terminal.'
+                    )
+                    break
 
             for detection in results.boxes.data:
                 class_id = int(
@@ -147,16 +193,12 @@ def run_pose_monitoring(  # noqa: PLR0914, PLR0915
                 best_pose if person_detected else POSE_NAO_DETECTADA
             )
             pose_durations[detected_pose_this_frame] += 1
-            _detected_pose_last_frame = detected_pose_this_frame
 
     # Finalização e relatório
     cap.release()
     cv2.destroyAllWindows()
-    elapsed_time = time.time() - start_time
-
-    total_frames_processed = frame_count
-    total_duration_processed_seconds = total_frames_processed / fps
-    total_duration_processed_minutes = total_duration_processed_seconds / 60
+    end_time = time.time()
+    total_time = end_time - start_time
 
     # Criação do relatório em tabela
     table = Table(title='📊 Relatório de Monitoramento de Poses')
@@ -164,24 +206,22 @@ def run_pose_monitoring(  # noqa: PLR0914, PLR0915
     table.add_column('Duração (min)', justify='right')
     table.add_column('Porcentagem', justify='right')
 
+    # Calcular a proporção de tempo para cada pose
+    total_frames = sum(pose_durations.values())
     for pose, frames in pose_durations.items():
-        duration_seconds = frames / fps
-        duration_minutes = duration_seconds / 60
-        percentage = (
-            (duration_seconds / total_duration_processed_seconds) * 100
-            if total_duration_processed_seconds > 0
-            else 0
-        )
+        # Calcula a proporção do tempo total para cada pose
+        duration_minutes = (frames / total_frames) * (total_time / 60)
+        percentage = (frames / total_frames) * 100 if total_frames > 0 else 0
         table.add_row(pose, f'{duration_minutes:.2f}', f'{percentage:.1f}%')
 
     console.print('\n')
     console.print(table)
     console.print(
         '\n⏱️ Tempo total monitorado: [bold]'
-        + f'{total_duration_processed_minutes:.2f}[/] minutos'
+        + f'{total_time / 60:.2f}[/] minutos'
     )
     console.print(
-        f'⚡ Tempo de processamento: [bold]{elapsed_time:.2f}[/] segundos'
+        f'⚡ Tempo de processamento: [bold]{total_time:.2f}[/] segundos'
     )
 
     return pose_durations
@@ -205,7 +245,9 @@ if __name__ == '__main__':
                 console.print('\n👋 Até logo!', style='bold blue')
                 break
 
-            video_path, duration_seconds, weights_path = get_user_parameters()
+            video_path, duration_seconds, weights_path, annotated_frame_cv2 = (
+                get_user_parameters()
+            )
 
             console.print('\n✨ Iniciando monitoramento com as configurações:')
             console.print(f'📹 Fonte de vídeo: {video_path}')
@@ -214,7 +256,10 @@ if __name__ == '__main__':
 
             if Confirm.ask('\n▶️ Confirmar e começar?', default=True):
                 report = run_pose_monitoring(
-                    video_path, duration_seconds, weights_path
+                    video_path,
+                    duration_seconds,
+                    weights_path,
+                    annotated_frame_cv2,
                 )
 
             if not Confirm.ask(

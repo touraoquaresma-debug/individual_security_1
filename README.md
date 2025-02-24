@@ -1,12 +1,12 @@
 # Sistema de Monitoramento de Poses para Idosos 🤖👴
 
-Sistema de monitoramento de poses baseado em YOLO para detecção de posturas de idosos, capaz de identificar se a pessoa está em pé, sentada ou deitada.
+Sistema de monitoramento de poses baseado em YOLO para detecção de posturas de idosos, capaz de identificar se a pessoa está idoso em pe, sentada ou deitada.
 
 ## ✨ Funcionalidades
 
 - 📹 Suporte para câmera web ou arquivo de vídeo
 - ⏱️ Monitoramento por tempo determinado
-- 🎯 Detecção de 3 poses: em pé, sentado e deitado
+- 🎯 Detecção de 3 poses: idoso em pe, idoso sentado e idoso deitado
 - 📊 Relatório detalhado com duração de cada pose
 - 🔄 Interface interativa via terminal
 - 🐳 Suporte a Docker
@@ -59,7 +59,7 @@ O projeto utiliza `taskipy` para automatizar comandos comuns. Aqui estão os com
 
 ```bash
 # Executar o monitoramento (modo interativo)
-task run_main
+task run
 
 # Executar com vídeo específico
 task run_main_video
@@ -129,9 +129,9 @@ O sistema possui várias configurações que podem ser ajustadas:
 - `DURACAO_PADRAO`: 300 segundos (5 minutos)
 - `FPS_PADRAO`: 30 fps
 - Classes detectadas:
-  - 0: Em pé
-  - 1: Sentado
-  - 2: Deitado
+  - 0: idoso em pe
+  - 1: idoso sentado
+  - 2: idoso deitado
 
 ## 📝 Licença
 
