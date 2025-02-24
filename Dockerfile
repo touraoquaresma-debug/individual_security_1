@@ -1,4 +1,5 @@
-FROM ghcr.io/astral-sh/uv:python3.12-slim-bookworm
+FROM python:3.12-slim-bookworm
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
 # Instala dependências do sistema necessárias para o OpenCV
 RUN apt-get update && apt-get install -y \
@@ -6,17 +7,14 @@ RUN apt-get update && apt-get install -y \
     libglib2.0-0 \
     && rm -rf /var/lib/apt/lists/*
 
-# Define o diretório de trabalho
+# Copy the project into the image
+ADD . /app
+
+# Sync the project into a new environment, using the frozen lockfile
 WORKDIR /app
+RUN uv sync --all-extras --dev --frozen
 
-# Copia os arquivos do projeto
-COPY pyproject.toml main.py constants.py ./
-COPY best.pt ./
+ENV PATH="/app/.venv/bin:$PATH"
 
-# Configura o ambiente UV e instala as dependências
-ENV UV_SYSTEM_PYTHON=1
-RUN --mount=type=cache,target=/root/.cache/uv \
-    uv sync
-
-# Comando para executar o programa
-CMD ["python", "main.py"]
+# Presuming there is a `my_app` command provided by the project
+CMD ["task", "run"]

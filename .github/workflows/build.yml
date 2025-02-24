@@ -16,19 +16,22 @@ jobs:
         config:
           - os: ubuntu-22.04
             build_cmd: create_linux
+            ext: ''
           - os: macos-latest
             build_cmd: create_mac
+            ext: ''
           - os: windows-2019
             build_cmd: create_exe
+            ext: '.exe'
 
     steps:
+      - uses: actions/checkout@v4
+
       - name: Install Linux dependencies
         if: matrix.config.os == 'ubuntu-22.04'
         run: |
           sudo apt-get update
           sudo apt-get install -y python3-tk python3-dev
-
-      - uses: actions/checkout@v4
 
       - name: Install uv
         uses: astral-sh/setup-uv@v5
@@ -57,7 +60,23 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - uses: actions/download-artifact@v4
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: elderly-pose-windows-2019.exe
+          path: windows-artifact
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: elderly-pose-ubuntu-22.04
+          path: ubuntu-artifact
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: elderly-pose-macos-latest
+          path: macos-artifact
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
@@ -65,8 +84,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           files: |
-            elderly-pose-windows-2019.exe
-            elderly-pose-ubuntu-22.04
-            elderly-pose-macos-latest
+            windows-artifact/elderly-pose-windows-2019.exe
+            ubuntu-artifact/elderly-pose-ubuntu-22.04
+            macos-artifact/elderly-pose-macos-latest
           draft: false
           prerelease: false
