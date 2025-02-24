@@ -41,3 +41,4 @@ run_main_custom = "python main.py --video_path {path} --duration {duration} --we
 clean = "rm -rf __pycache__ .pytest_cache .ruff_cache"
 test = "python -m pytest"
 train = "python treinamento.py"
+create_exe = 'pyinstaller --noconfirm --onefile --icon="downloads/imagens/idoso.ico" --add-data "runs/pose/train/weights/best.pt;runs/pose/train/weights" --clean --log-level DEBUG -d all --optimize 1 main.py'
