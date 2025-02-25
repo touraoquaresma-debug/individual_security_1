@@ -20,7 +20,7 @@ jobs:
           - os: macos-latest
             build_cmd: create_mac
             ext: ''
-          - os: windows-2019
+          - os: windows-latest
             build_cmd: create_exe
             ext: '.exe'
 
@@ -63,7 +63,7 @@ jobs:
       - name: Download artifacts
         uses: actions/download-artifact@v4
         with:
-          name: elderly-pose-windows-2019.exe
+          name: elderly-pose-windows-latest.exe
           path: windows-artifact
 
       - name: Download artifacts
@@ -81,7 +81,7 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
         with:
           files: |
             windows-artifact/elderly-pose-windows-2019.exe
