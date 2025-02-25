@@ -20,7 +20,7 @@ jobs:
           - os: macos-latest
             build_cmd: create_mac
             ext: ''
-          - os: windows-latest
+          - os: windows-2019
             build_cmd: create_exe
             ext: '.exe'
 
@@ -34,6 +34,7 @@ jobs:
             downloads/YOLOElderlyPose.v2i.yolov11/data.yaml
             downloads/imagens/idoso.png
             downloads/imagens/idoso.ico
+            downloads/imagens/idoso.icns
             pyproject.toml
             uv.lock
 
@@ -73,7 +74,7 @@ jobs:
       - name: Download artifacts
         uses: actions/download-artifact@v4
         with:
-          name: elderly-pose-windows-latest.exe
+          name: elderly-pose-windows-2019.exe
           path: windows-artifact
 
       - name: Download artifacts
