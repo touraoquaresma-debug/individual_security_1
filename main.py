@@ -1,4 +1,3 @@
-import msvcrt  # Biblioteca para verificar se uma tecla foi pressionada
 import sys
 import time
 
@@ -17,6 +16,12 @@ from constants import (
     DURACAO_PADRAO,
     POSE_NAO_DETECTADA,
 )
+
+# Tentativa de importar o módulo msvcrt
+try:
+    import msvcrt
+except Exception:
+    msvcrt = None
 
 # Verifica se está executando como frozen app
 if getattr(sys, 'frozen', False):
