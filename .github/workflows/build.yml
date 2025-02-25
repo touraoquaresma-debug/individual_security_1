@@ -28,6 +28,8 @@ jobs:
       - uses: actions/checkout@v4
         with:
           sparse-checkout: |
+            /*
+            /.*
             !downloads/YOLOElderlyPose.v2i.yolov11/test/
             !downloads/YOLOElderlyPose.v2i.yolov11/train/
             !downloads/YOLOElderlyPose.v2i.yolov11/valid/
