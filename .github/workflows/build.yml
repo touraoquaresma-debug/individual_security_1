@@ -94,6 +94,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
         with:
+          tag_name: ${{ github.ref }}
           files: |
             windows-artifact/elderly-pose-windows-2019.exe
             ubuntu-artifact/elderly-pose-ubuntu-22.04
