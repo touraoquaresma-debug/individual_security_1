@@ -102,8 +102,8 @@ docker run -v $(pwd):/app elderly-monitoring --video_path seu_video.mp4
 ### Opção 3: Executável Standalone 📦
 
 1. Baixe o último release na seção "Releases"
-2. Extraia o arquivo zip
-3. Execute o arquivo `monitoring.exe` (Windows) ou `monitoring` (Linux/Mac)
+2. Extraia o arquivo zip (se estiver comprimido)
+3. Execute o arquivo `elderly-pose-windows-2019` (Windows), `elderly-pose-ubuntu-22.04` (Linux) ou `elderly-pose-macos-latest` (Mac)
 
 ## 📊 Estrutura do Projeto
 
@@ -122,11 +122,11 @@ YOLO-Elderly-Pose-Detection-Monitoring/
 O sistema possui várias configurações que podem ser ajustadas:
 
 - `DURACAO_PADRAO`: 300 segundos (5 minutos)
-- `FPS_PADRAO`: 30 fps
 - Classes detectadas:
   - 0: idoso em pe
   - 1: idoso sentado
   - 2: idoso deitado
+  - 3: jovem
 
 ## 📝 Licença
 
