@@ -1,4 +1,8 @@
-opencv-python>=4.11.0.86
+lap>=0.5.12
+opencv-python==4.10.0.84
 pandas>=2.2.3
 rich>=13.9.4
-ultralytics>=8.3.74
+ultralytics>=8.3.78
+auto-py-to-exe>=2.46.0
+ruff>=0.9.6
+taskipy>=1.14.1

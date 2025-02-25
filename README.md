@@ -6,7 +6,7 @@ Sistema de monitoramento de poses baseado em YOLO para detecção de posturas de
 
 - 📹 Suporte para câmera web ou arquivo de vídeo
 - ⏱️ Monitoramento por tempo determinado
-- 🎯 Detecção de 3 poses: idoso em pe, idoso sentado e idoso deitado
+- 🎯 Detecção de 4 poses: idoso em pe, idoso sentado, idoso deitado e jovem
 - 📊 Relatório detalhado com duração de cada pose
 - 🔄 Interface interativa via terminal
 - 🐳 Suporte a Docker
@@ -110,10 +110,23 @@ docker run -v $(pwd):/app elderly-monitoring --video_path seu_video.mp4
 ```
 YOLO-Elderly-Pose-Detection-Monitoring/
 ├── main.py           # Script principal
+├── treinamento.py    # Script de treinamento
 ├── constants.py      # Constantes e configurações
-├── best.pt          # Arquivo de pesos do modelo
+├── .github\workflows\build.yml             # Configuração CI/CD
+├── .gitignore        # Arquivos ignorados pelo Git
+├── requirements.txt  # Dependências do projeto
+├── yolo11n.pt        # Modelo YOLO pré-treinado
+├── config.json       # Configurações para auto-py-to-exe
+├── downloads\YOLOElderlyPose.v2i.yolov11  # Dataset do modelo 1
+├── downloads\YOLOElderlyPose.v3i.yolov11 # Dataset do modelo 2
+├── downloads\imagens\idoso.ico            # Ícone do sistema
+├── downloads\imagens\idoso.png            # Imagem do sistema
+├── uv.lock           # Dependências gerenciadas pelo uv
+├── runs\pose\train\weights\best.pt           # Arquivo de pesos do modelo 1
+├── runs\pose\train2\weights\best.pt          # Arquivo de pesos do modelo 2
 ├── pyproject.toml   # Configurações do projeto
 ├── Dockerfile       # Configuração Docker
+├── LICENSE          # Licença do projeto
 └── README.md        # Este arquivo
 ```
 
