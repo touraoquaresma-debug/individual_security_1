@@ -26,6 +26,14 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            !downloads/YOLOElderlyPose.v2i.yolov11/test/
+            !downloads/YOLOElderlyPose.v2i.yolov11/train/
+            !downloads/YOLOElderlyPose.v2i.yolov11/valid/
+            !downloads/YOLOElderlyPose.v3i.yolov11/test/
+            !downloads/YOLOElderlyPose.v3i.yolov11/train/
+            !downloads/YOLOElderlyPose.v3i.yolov11/valid/
 
       - name: Install Linux dependencies
         if: matrix.config.os == 'ubuntu-22.04'
