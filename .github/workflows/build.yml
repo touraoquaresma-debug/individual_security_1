@@ -32,6 +32,8 @@ jobs:
             constants.py
             runs/pose/train/weights/best.pt
             downloads/YOLOElderlyPose.v2i.yolov11/data.yaml
+            downloads/imagens/idoso.png
+            downloads/imagens/idoso.ico
             pyproject.toml
             uv.lock
 
