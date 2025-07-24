@@ -114,7 +114,9 @@ def run_pose_monitoring(  # noqa: PLR0912, PLR0914, PLR0915
     with console.status('[bold green]Carregando o modelo YOLO...'):
         try:
             model = YOLO(weights_path)
-            model.classes = [0, 1, 2, 3]
+            model.classes = [0, 1, 2, 3, 4]
+            # confiança mínima
+            model.conf = 0.5
         except Exception as e:
             console.print(
                 f'[bold red]❌ Erro ao carregar o modelo:[/] {str(e)}'

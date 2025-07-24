@@ -104,7 +104,12 @@ def train_yolov8_pose_model(
 if __name__ == '__main__':
     dataset_config_file = ARQUIVO_CONFIGURACAO_DATASET
     modelo_pre_treinado = 'yolo11n.pt'
+    # foi usado o yolo11n.pt por ser o mais leve
     num_epochs = 100
+    # foi usado 100 épocas por ser o padrão do YOLOv8
+    # e por que menor não seria suficiente para o treinamento
+    # por ter menor imagens rotuladas
+    # nas classes idoso deitado e idoso em pé
     tamanho_imagem = 640
 
     train_results = train_yolov8_pose_model(

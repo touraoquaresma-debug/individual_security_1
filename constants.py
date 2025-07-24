@@ -8,7 +8,7 @@ CLASSES_DETECTADAS = {
     0: 'idoso deitado',
     1: 'idoso em pe',
     2: 'idoso sentado',
-    3: 'jovem'
+    3: 'jovem',
 }
 
 # Configurações padrão
